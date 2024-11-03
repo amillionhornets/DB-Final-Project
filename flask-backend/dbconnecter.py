@@ -9,8 +9,9 @@ conn = pymssql.connect(
 )
 
 cursor = conn.cursor()
-cursor.execute("use quotesDatabase")
-cursor.execute("SELECT * FROM Authors")
-result = cursor.fetchall()
 
-func 
+def findAllAuthors():
+    result = cursor.fetchall()
+    cursor.execute("use quotesDatabase")
+    cursor.execute("SELECT * FROM Authors")
+    
