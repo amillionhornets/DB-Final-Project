@@ -1,18 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Quote from "./quote"
+import Home from './home';
+import AddQuotes from "./addQuotes"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 function App() {
-  return (
-    <>
-    <div className='bg-purple-300'>
-      <div class="text-center mt-5">
-          <label for="searchBar"><input type="text" id="search"></input></label>
-          <button onclick="search()">Search</button>
-      </div>
-      <p id="test"></p>
-      </div>
-    </>
-  );
+ return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/quote" element={<Quote />} />
+          <Route path="/addQuotes" element={<AddQuotes />} />
+        </Routes>
+      </Router>
+    </div>
+ );
 }
 
 export default App;
