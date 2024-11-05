@@ -1,5 +1,9 @@
+import './index.css'
+import React, {useState, useEffect} from 'react';
 
-function home() {
+
+function Home() {
+  const [data, setData] = useState([{}])
     return (
       <>
       <div className='bg-purple-300'>
@@ -13,5 +17,5 @@ function home() {
     );
   }
   
-  export default home;
+  export default Home;
   

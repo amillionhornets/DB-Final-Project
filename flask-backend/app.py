@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request, render_template
 from flask_restful import Api, Resource, abort
 from dbconnecter import findBook
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -15,7 +18,7 @@ def quotes():
 def search():
     req = request.get_json(force=True)
     book = req['bookName']
-    return findBook(book)
+    return jsonify({"bookName": findBook(book)})
 
 if __name__ == "__main__":
     app.run() 

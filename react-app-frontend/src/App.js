@@ -1,6 +1,6 @@
-import Quote from "./quote"
-import Home from './home';
-import AddQuotes from "./addQuotes"
+import Quote from "./Quote"
+import Home from './Home';
+import AddQuotes from "./AddQuotes"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 function App() {
