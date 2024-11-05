@@ -1,5 +1,4 @@
 import pymssql
-import pandas as pd
 from flask import jsonify
 conn = pymssql.connect(
     server='DYL',
