@@ -6,6 +6,7 @@ function Quote() {
   function postData() {
     let jsonObj = {};
     
+    // let bodyObj = JSON.stringify(jsonObj);
     let bodyObj = JSON.stringify(jsonObj);
     
     fetch("http://127.0.0.1:5000/API/getAllQuotes", {
