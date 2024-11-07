@@ -20,7 +20,13 @@ def findBook(bookName):
     cursor.execute("use quotesDatabase")
     cursor.execute(f"SELECT * FROM Books WHERE bookName='{bookName}'")
     result = cursor.fetchall()
-    
     return (result[0]["bookName"])
 
-findBook("The Stranger")
+def allQuotes():
+    cursor.execute("use quotesDatabase")
+    cursor.execute("SELECT  fname, lname,bookName, quote FROM quotes LEFT JOIN Books ON quotes.bookID = Books.bookID LEFT JOIN Authors ON Books.authorID = Authors.authorID")
+    result = cursor.fetchall()
+    return result
+
+print(allQuotes())
+# findBook("The Stranger")
