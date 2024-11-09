@@ -20,6 +20,7 @@ def addQuotes():
     year = req['yearPublished']
     quote = req['quote']
     return jsonify(addQuotesDB(fname, lname, book, year, quote))
+    # return "test"
 
 @app.route('/API/search', methods=['POST'])
 def search():
@@ -29,7 +30,7 @@ def search():
 
 @app.route('/API/getAllQuotes', methods=['POST'])
 def getQuotes():
-    # req = request.get_json(force=True)
+    req = request.get_json(force=True)
     return jsonify(allQuotes())
 
 if __name__ == "__main__":

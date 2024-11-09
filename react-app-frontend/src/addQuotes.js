@@ -13,7 +13,7 @@ function AddQuotes() {
       lastName: lname,
       bookName: book, 
       yearPublished: year, 
-      quote: quote, 
+      quote: quote
     };
     
     let bodyObj = JSON.stringify(jsonObj);

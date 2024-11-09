@@ -6,8 +6,8 @@ function Quote() {
   function postData() {
     let jsonObj = {};
     
-    // let bodyObj = JSON.stringify(jsonObj);
     let bodyObj = JSON.stringify(jsonObj);
+    // let bodyObj = JSON.stringify(jsonObj);
     
     fetch("http://127.0.0.1:5000/API/getAllQuotes", {
       method: "POST",
@@ -38,7 +38,6 @@ function Quote() {
   return (
   
    <>
-      <h1>Quotes Table</h1>
       <table border="1" style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr>
