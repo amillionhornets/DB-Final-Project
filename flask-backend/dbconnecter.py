@@ -1,34 +1,49 @@
 import pymssql
 from flask import jsonify
-conn = pymssql.connect(
-    server='DYL',
-    user='quoteAdmin',
-    password='Password1',
-    database='master',
-    as_dict=True
-)
 
-cursor = conn.cursor()
+def getDBConnection():
+    return pymssql.connect(
+        server='DYL',
+        user='quoteAdmin',
+        password='Password1',
+        database='quotesDatabase',
+        as_dict=True
+    )
+
 
 def findAllAuthors():
+    conn = getDBConnection()
+    cursor = conn.cursor()
     cursor.execute("use quotesDatabase")
     cursor.execute("SELECT * FROM Authors")
     result = cursor.fetchall()
+    cursor.close()
+    conn.close()
     print(len(result))
 
 def findBook(bookName):
+    conn = getDBConnection()
+    cursor = conn.cursor()
     cursor.execute("use quotesDatabase")
     cursor.execute(f"SELECT * FROM Books WHERE bookName='{bookName}'")
     result = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return (result[0]["bookName"])
 
 def allQuotes():
+    conn = getDBConnection()
+    cursor = conn.cursor()
     cursor.execute("use quotesDatabase")
     cursor.execute("SELECT  fname, lname,bookName, quote FROM quotes LEFT JOIN Books ON quotes.bookID = Books.bookID LEFT JOIN Authors ON Books.authorID = Authors.authorID")
     result = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return result
 
 def addQuotesDB(fname, lname, book, yearPub, quote):
+    conn = getDBConnection()
+    cursor = conn.cursor()
     cursor.execute("use quotesDatabase")
     cursor.execute(f"SELECT authorID FROM Authors WHERE fname='{fname}' AND lname='{lname}'") # Check to see if the author exists
     result = cursor.fetchall()
@@ -48,6 +63,8 @@ def addQuotesDB(fname, lname, book, yearPub, quote):
     conn.commit()
     cursor.execute(f"SELECT quoteID FROM quotes WHERE quote='{quote}'") # Get the quote id
     result3 = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return len(result3) # return the quote id
 # addQuotesDB("test", "test", "test", "123", "Rummaging in our souls, we often dig up something that ought to have lain there unnoticed.")
 # addQuotes("Leo", "Tolstoy", "Anna karenina", "1873", "Rummaging in our souls, we often dig up something that ought to have lain there unnoticed.")

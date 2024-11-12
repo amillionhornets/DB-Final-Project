@@ -6,28 +6,30 @@ function Quote() {
   function postData() {
     let jsonObj = {};
     
-    let bodyObj = JSON.stringify(jsonObj);
+    let bodyObj = JSON.stringify({ });
     // let bodyObj = JSON.stringify(jsonObj);
     
-    fetch("http://127.0.0.1:5000/API/getAllQuotes", {
-      method: "POST",
+    fetch("http://127.0.0.1:5000/API/getAllQuotes",{
+      method:"POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json" // Add Content-Type header to specify you're sending JSON
       },
       body: bodyObj
-    })
-    .then(res => res.json())
-    .then(data => {
-      setData(data);
-      console.log(data); 
-    })
-    .catch(error => {
-      console.error("Error:", error); 
-    });
+    }
+    ).then(
+      res => res.json()
+      ).then(
+        data => {
+          setData(data)
+        }
+      )
   }
   
   
   useEffect(() => {
+    if(data.length > 0){
+      data = null
+    }
     postData(); 
   }, []);  
 
