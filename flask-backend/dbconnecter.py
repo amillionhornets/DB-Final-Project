@@ -65,9 +65,14 @@ def addQuotesDB(fname, lname, book, yearPub, quote):
     result3 = cursor.fetchall()
     cursor.close()
     conn.close()
-    return len(result3) # return the quote id
-# addQuotesDB("test", "test", "test", "123", "Rummaging in our souls, we often dig up something that ought to have lain there unnoticed.")
-# addQuotes("Leo", "Tolstoy", "Anna karenina", "1873", "Rummaging in our souls, we often dig up something that ought to have lain there unnoticed.")
-# addQuotes("Albert", "Camus", "The Myth of Sisyphus", "1942", "But this time is ours, and we cannot live hating ourselves.")
-# print(allQuotes())
-# findBook("The Stranger")
+    return len(result3) 
+
+def deleteRecord(quote):
+    conn = getDBConnection()
+    cursor = conn.cursor()
+    cursor.execute("use quotesDatabase")
+    cursor.execute(f"DELETE FROM quotes WHERE quote='{quote}'")
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return 1
