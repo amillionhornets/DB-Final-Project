@@ -5,13 +5,13 @@ function Quote() {
   const buttonRef = useRef(null);
 
   const deleteQuote = (index) => {
-    const quoteItem = data[index];  // Access the quoteItem based on index
-    const quoteText = quoteItem.quote;  // Get the quote text
+    const quoteItem = data[index];
+    const quoteText = quoteItem.quote;
     let bodyObj = JSON.stringify({"quote": quoteText})
     fetch("http://127.0.0.1:5000/API/deleteQuote",{
       method:"POST",
       headers: {
-        "Content-Type": "application/json" // Add Content-Type header to specify you're sending JSON
+        "Content-Type": "application/json"
       },
       body: bodyObj
     }
@@ -22,22 +22,38 @@ function Quote() {
           postData()
         }
       )
-    
-  
-    // Perform your deletion logic (e.g., updating state or calling API)
-    // Optionally, remove the quote from the data array and re-render the component
+  };
+  const updateQuote = (index) => {
+    const quoteItem = data[index];
+    const orginalQuote = data[index]['quote']
+    console.log(quoteItem.quote);
+    // const quoteText = quoteItem.quote;
+    // let bodyObj = JSON.stringify({"quote": quoteText})
+    // fetch("http://127.0.0.1:5000/API/updateQuote",{
+    //   method:"POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: bodyObj
+    // }
+    // ).then(
+    //   res => res.json()
+    //   ).then(
+    //     data => {
+    //       postData()
+    //     }
+    //   )
   };
 
   function postData() {
     let jsonObj = {};
     
     let bodyObj = JSON.stringify({ });
-    // let bodyObj = JSON.stringify(jsonObj);
     
     fetch("http://127.0.0.1:5000/API/getAllQuotes",{
       method:"POST",
       headers: {
-        "Content-Type": "application/json" // Add Content-Type header to specify you're sending JSON
+        "Content-Type": "application/json"
       },
       body: bodyObj
     }
@@ -71,22 +87,26 @@ function Quote() {
             <th>Book</th>
             <th>Author</th>
             <th>Quote</th>
+            <th>Edit</th>
           </tr>
         </thead>
-<tbody>
+<tbody className='text-lg'>
   {data.map((quoteItem, index) => (
-    <tr key={index}>
+    <tr key={index} className='text-center p-0'>
       <td>{quoteItem.bookName}</td>
-      <td>{quoteItem.fname} {quoteItem.lname}</td>
-      <td className="quote-cell">"{quoteItem.quote}"</td>
+      <td>{quoteItem.fname} {quoteItem.lname}</td>              
+      <td className="quote-cell">
+        <input value={quoteItem.quote} className='w-max' />
+      </td>
       <td>
-        <button
+        <button className='m-1'
           ref={buttonRef}
-          onClick={() => deleteQuote(index)}  // Pass the index to deleteQuote handler
+          onClick={() => deleteQuote(index)} 
         >
           Delete
         </button>
-        <button>Edit</button>
+        <button onClick={() => updateQuote(index)}
+        >Edit</button>
       </td>
     </tr>
   ))}

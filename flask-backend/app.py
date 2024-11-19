@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_restful import Api, Resource, abort
-from dbconnecter import findBook, allQuotes, addQuotesDB, deleteRecord
+from dbconnecter import findBook, allQuotes, addQuotesDB, deleteRecord, updateQuotes
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -32,8 +32,13 @@ def search():
 def delete():
     req = request.get_json(force=True)
     quote = req['quote']
-    print(quote)
     return jsonify(deleteRecord(quote))
+
+@app.route('/API/updateQuote', methods=['POST'])
+def update():
+    req = request.get_json(force=True)
+    quote = req['quote']
+    return jsonify(updateQuotes(quote))
 
 @app.route('/API/getAllQuotes', methods=['POST'])
 def getQuotes():

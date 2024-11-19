@@ -21,6 +21,16 @@ def findAllAuthors():
     conn.close()
     print(len(result))
 
+def updateQuotes():
+    conn = getDBConnection()
+    cursor = conn.cursor()
+    cursor.execute("use quotesDatabase")
+    cursor.execute("SELECT * FROM Authors")
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    print(len(result))
+
 def findBook(bookName):
     conn = getDBConnection()
     cursor = conn.cursor()
