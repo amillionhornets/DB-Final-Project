@@ -21,11 +21,11 @@ def findAllAuthors():
     conn.close()
     print(len(result))
 
-def updateQuotes():
+def updateQuotes(newQuote, oldQuote):
     conn = getDBConnection()
     cursor = conn.cursor()
     cursor.execute("use quotesDatabase")
-    cursor.execute("SELECT * FROM Authors")
+    cursor.execute(f"UPDATE quotes SET quote='{newQuote}' WHERE quote='{oldQuote}'")
     result = cursor.fetchall()
     cursor.close()
     conn.close()

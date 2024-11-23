@@ -38,7 +38,9 @@ def delete():
 def update():
     req = request.get_json(force=True)
     quote = req['quote']
-    return jsonify(updateQuotes(quote))
+    newQuote = req['newQuote']
+    print(quote)
+    return jsonify(updateQuotes(newQuote, quote))
 
 @app.route('/API/getAllQuotes', methods=['POST'])
 def getQuotes():

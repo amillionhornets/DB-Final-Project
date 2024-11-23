@@ -21,7 +21,7 @@ function AddQuotes() {
     fetch("http://127.0.0.1:5000/API/addQuotes", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json" // Add Content-Type header to specify you're sending JSON
+        "Content-Type": "application/json" 
       },
       body: bodyObj
     })
@@ -31,7 +31,7 @@ function AddQuotes() {
       console.log(data)
     })
     .catch(error => {
-      console.error("Error:", error); // Catch any errors in the fetch process
+      console.error("Error:", error);
     });
   }
   

@@ -1,86 +1,91 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 function Quote() {
-  const [data, setData] = useState([]); 
+  const [data, setData] = useState([]);
+  const [editingQuoteIndex, setEditingQuoteIndex] = useState(null);
+  const [editedQuote, setEditedQuote] = useState("");
+
   const buttonRef = useRef(null);
 
   const deleteQuote = (index) => {
     const quoteItem = data[index];
     const quoteText = quoteItem.quote;
-    let bodyObj = JSON.stringify({"quote": quoteText})
-    fetch("http://127.0.0.1:5000/API/deleteQuote",{
-      method:"POST",
+    let bodyObj = JSON.stringify({ "quote": quoteText });
+    fetch("http://127.0.0.1:5000/API/deleteQuote", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: bodyObj
-    }
-    ).then(
+    }).then(
       res => res.json()
-      ).then(
-        data => {
-          postData()
-        }
-      )
+    ).then(
+      data => {
+        postData();
+      }
+    );
   };
+
   const updateQuote = (index) => {
-    const quoteItem = data[index];
-    const orginalQuote = data[index]['quote']
-    console.log(quoteItem.quote);
-    // const quoteText = quoteItem.quote;
-    // let bodyObj = JSON.stringify({"quote": quoteText})
-    // fetch("http://127.0.0.1:5000/API/updateQuote",{
-    //   method:"POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: bodyObj
-    // }
-    // ).then(
-    //   res => res.json()
-    //   ).then(
-    //     data => {
-    //       postData()
-    //     }
-    //   )
+    const newQuoteItem = editedQuote;
+    const oldQuoteItem = data[index]['quote'];
+    let bodyObj = JSON.stringify({ "quote": oldQuoteItem, "newQuote":newQuoteItem });
+    console.log(bodyObj)
+    fetch("http://127.0.0.1:5000/API/updateQuote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: bodyObj
+    }).then(
+      res => res.json()
+    ).then(
+      data => {
+        postData();
+        setEditingQuoteIndex(null);
+      }
+    );
   };
 
   function postData() {
-    let jsonObj = {};
-    
-    let bodyObj = JSON.stringify({ });
-    
-    fetch("http://127.0.0.1:5000/API/getAllQuotes",{
-      method:"POST",
+    let bodyObj = JSON.stringify({});
+    fetch("http://127.0.0.1:5000/API/getAllQuotes", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: bodyObj
-    }
-    ).then(
+    }).then(
       res => res.json()
-      ).then(
-        data => {
-          setData(data)
-        }
-      )
+    ).then(
+      data => {
+        setData(data);
+      }
+    );
   }
-  
-  
+
   useEffect(() => {
-    if(data.length > 0){
-      data = null
+    if (data.length > 0) {
+      data = null;
     }
-    postData(); 
-  }, []);  
+    postData();
+  }, []);
+
+  const handleEditChange = (event) => {
+    setEditedQuote(event.target.value);
+  };
+
+  const handleStartEdit = (index, quoteText) => {
+    setEditingQuoteIndex(index);
+    setEditedQuote(quoteText);
+  };
 
   if (data.length === 0) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
-  
-   <>
+    <>
       <table border="1" style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr>
@@ -90,27 +95,38 @@ function Quote() {
             <th>Edit</th>
           </tr>
         </thead>
-<tbody className='text-lg'>
-  {data.map((quoteItem, index) => (
-    <tr key={index} className='text-center p-0'>
-      <td>{quoteItem.bookName}</td>
-      <td>{quoteItem.fname} {quoteItem.lname}</td>              
-      <td className="quote-cell">
-        <input value={quoteItem.quote} className='w-max' />
-      </td>
-      <td>
-        <button className='m-1'
-          ref={buttonRef}
-          onClick={() => deleteQuote(index)} 
-        >
-          Delete
-        </button>
-        <button onClick={() => updateQuote(index)}
-        >Edit</button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+        <tbody className='text-lg'>
+          {data.map((quoteItem, index) => (
+            <tr key={index} className='text-center p-0'>
+              <td>{quoteItem.bookName}</td>
+              <td>{quoteItem.fname} {quoteItem.lname}</td>
+              <td className="quote-cell">
+                {editingQuoteIndex === index ? (
+                  <textarea 
+                    value={editedQuote}
+                    onChange={handleEditChange} 
+                  />
+                ) : (
+                  <span>{quoteItem.quote}</span>
+                )}
+              </td>
+              <td>
+                <button
+                  className='m-1'
+                  ref={buttonRef}
+                  onClick={() => deleteQuote(index)}
+                >
+                  Delete
+                </button>
+                {editingQuoteIndex === index ? (
+                  <button onClick={() => updateQuote(index)}>Save</button> // Update button
+                ) : (
+                  <button onClick={() => handleStartEdit(index, quoteItem.quote)}>Edit</button> // Edit button
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </>
   );
