@@ -4,6 +4,25 @@ import React, {useState, useEffect} from 'react';
 
 function Home() {
   const [data, setData] = useState([{}])
+  function search(){
+      let book = document.getElementById("search").value;
+      if(book != ""){
+        let bodyObj = JSON.stringify({"bookName": book});
+        fetch("http://127.0.0.1:5000/API/getBookQuotes", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: bodyObj
+        }).then(
+          res => res.json()
+        ).then(
+          data => {
+            setData(data);
+          }
+        );
+      }
+    }
     return (
       <>
       <div className='bg-purple-300'>
@@ -11,7 +30,7 @@ function Home() {
             <h1 class="text-center text-7xl mt-5 text-white drop-shadow-2xl">Quote Finder</h1>
             <div className='mt-5 text-2xl'>
               <label for="searchBar"><input type="text" id="search"></input></label>
-              <button class='bg-gray-400 text-white rounded-lg text-md text-center m-3' onclick="search()">Search</button>
+              <button class='bg-gray-400 text-white rounded-lg text-md text-center m-3' onClick={() => search()}>Search</button>
             </div>
         </div>
         <div>

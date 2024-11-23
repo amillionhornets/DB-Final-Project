@@ -86,31 +86,32 @@ function Quote() {
 
   return (
     <>
-      <table border="1" style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th>Book</th>
-            <th>Author</th>
-            <th>Quote</th>
-            <th>Edit</th>
+      <table className='border-white border-2 border-collapse m-1'>
+        <thead className='text-lg border-white border-2'>
+          <tr className='text-lg border-white border-2'>
+            <th className='text-lg border-white border-2'>Book</th>
+            <th className='text-lg border-white border-2'>Author</th>
+            <th className='text-lg border-white border-2'>Quote</th>
+            <th className='text-lg border-white border-2'>Edit</th>
           </tr>
         </thead>
-        <tbody className='text-lg'>
+        <tbody className='text-lg border-white border-2'>
           {data.map((quoteItem, index) => (
-            <tr key={index} className='text-center p-0'>
-              <td>{quoteItem.bookName}</td>
-              <td>{quoteItem.fname} {quoteItem.lname}</td>
-              <td className="quote-cell">
+            <tr key={index} className='text-center text-lg border-white border-2'>
+              <td className='text-lg border-white border-2'>{quoteItem.bookName}</td>
+              <td className='text-lg border-white border-2'>{quoteItem.fname} {quoteItem.lname}</td>
+              <td className="quote-cell className='text-lg border-white border-2'">
                 {editingQuoteIndex === index ? (
-                  <textarea 
+                  <textarea
+                    className='text-lg border-white border-2' 
                     value={editedQuote}
                     onChange={handleEditChange} 
                   />
                 ) : (
-                  <span>{quoteItem.quote}</span>
+                  <span >{quoteItem.quote}</span>
                 )}
               </td>
-              <td>
+              <td className='text-lg border-white border-2'>
                 <button
                   className='m-1'
                   ref={buttonRef}
