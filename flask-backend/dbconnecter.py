@@ -26,10 +26,10 @@ def updateQuotes(newQuote, oldQuote):
     cursor = conn.cursor()
     cursor.execute("use quotesDatabase")
     cursor.execute(f"UPDATE quotes SET quote='{newQuote}' WHERE quote='{oldQuote}'")
-    result = cursor.fetchall()
+    conn.commit()
     cursor.close()
     conn.close()
-    print(len(result))
+    return 1
 
 def findBook(bookName):
     conn = getDBConnection()

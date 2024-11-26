@@ -28,7 +28,6 @@ def searchBook():
     book = req['bookName']
     return jsonify(findBook(book))
 
-
 @app.route('/API/deleteQuote', methods=['POST'])
 def delete():
     req = request.get_json(force=True)
@@ -40,7 +39,6 @@ def update():
     req = request.get_json(force=True)
     quote = req['quote']
     newQuote = req['newQuote']
-    print(quote)
     return jsonify(updateQuotes(newQuote, quote))
 
 @app.route('/API/getAllQuotes', methods=['POST'])
