@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
 function AddQuotes() {
   const [data, setData] = useState([{}]);
+  const navi = useNavigate(); 
   function addQuote() {
     let fname = document.getElementById("authorFname").value;
     let lname = document.getElementById("authorLname").value;
@@ -15,7 +17,7 @@ function AddQuotes() {
       yearPublished: year, 
       quote: quote
     };
-    
+
     let bodyObj = JSON.stringify(jsonObj);
     
     fetch("http://127.0.0.1:5000/API/addQuotes", {
@@ -34,6 +36,9 @@ function AddQuotes() {
       console.error("Error:", error);
     });
   }
+  const quotesHome = () => {
+    navi('/quotes');
+  };
   
     return (
       <>
@@ -48,6 +53,7 @@ function AddQuotes() {
                 {/* <label>Book Name: <input type="text" id="authorFname" className="border-2 border-black"></input></label><br></br> */}
             </div>
         </div>
+        <button className='bg-gray-400 mr-auto ml-auto flex text-white rounded-lg text-md m-3' onClick={() => quotesHome()}>See Quotes !</button>
       </>
     );
   }

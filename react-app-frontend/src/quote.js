@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
 function Quote() {
   const [data, setData] = useState([]);
   const [editingQuoteIndex, setEditingQuoteIndex] = useState(null);
   const [editedQuote, setEditedQuote] = useState("");
-
+  const navi = useNavigate(); 
   const buttonRef = useRef(null);
 
   const deleteQuote = (index) => {
@@ -49,6 +50,10 @@ function Quote() {
   function search(){
     
   }
+  const addQuote = () => {
+    navi('/addQuotes');
+  };
+
   function postData() {
     let bodyObj = JSON.stringify({});
     fetch("http://127.0.0.1:5000/API/getAllQuotes", {
@@ -135,6 +140,7 @@ function Quote() {
           ))}
         </tbody>
       </table>
+      <button className='bg-gray-400 text-white rounded-lg text-md text-center m-3' onClick={() => addQuote()}>Add a Quote !</button>
     </>
   );
 }
