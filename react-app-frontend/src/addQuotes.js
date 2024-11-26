@@ -37,7 +37,7 @@ function AddQuotes() {
     });
   }
   const quotesHome = () => {
-    navi('/quotes');
+    navi('/quote');
   };
   
     return (
@@ -50,7 +50,6 @@ function AddQuotes() {
                 <label>year: <input type="text" id="year" className="border-2 border-black"></input></label><br></br>
                 <label>Quote: <input type="text" id="quote" className="border-2 border-black"></input></label><br></br>
                 <button onClick={addQuote}>Submit</button>
-                {/* <label>Book Name: <input type="text" id="authorFname" className="border-2 border-black"></input></label><br></br> */}
             </div>
         </div>
         <button className='bg-gray-400 mr-auto ml-auto flex text-white rounded-lg text-md m-3' onClick={() => quotesHome()}>See Quotes !</button>

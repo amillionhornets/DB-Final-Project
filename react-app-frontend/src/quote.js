@@ -48,7 +48,26 @@ function Quote() {
     );
   };
   function search(){
-    
+    let book = document.getElementById('search').value;
+    console.log(book);
+    let bodyObj = JSON.stringify({"bookName": book});
+    if(book == ""){
+      postData()
+      return
+    }
+    fetch("http://127.0.0.1:5000/API/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: bodyObj
+    }).then(
+      res => res.json()
+    ).then(
+      data => {
+        setData(data);
+      }
+    );
   }
   const addQuote = () => {
     navi('/addQuotes');

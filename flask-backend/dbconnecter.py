@@ -35,11 +35,11 @@ def findBook(bookName):
     conn = getDBConnection()
     cursor = conn.cursor()
     cursor.execute("use quotesDatabase")
-    cursor.execute(f"SELECT * FROM Books WHERE bookName='{bookName}'")
+    cursor.execute(f"SELECT fname, lname, bookName, quote FROM quotes LEFT JOIN Books ON quotes.bookID = Books.bookID LEFT JOIN Authors ON Books.authorID = Authors.authorID WHERE bookName='{bookName}'")
     result = cursor.fetchall()
     cursor.close()
     conn.close()
-    return (result[0]["bookName"])
+    return (result)
 
 def allQuotes():
     conn = getDBConnection()
