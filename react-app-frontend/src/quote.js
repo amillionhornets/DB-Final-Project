@@ -46,7 +46,9 @@ function Quote() {
       }
     );
   };
-
+  function search(){
+    
+  }
   function postData() {
     let bodyObj = JSON.stringify({});
     fetch("http://127.0.0.1:5000/API/getAllQuotes", {
@@ -86,6 +88,10 @@ function Quote() {
 
   return (
     <>
+    <div className='mt-5 text-2xl'>
+              <label for="searchBar"><input type="text" id="search"></input></label>
+              <button class='bg-gray-400 text-white rounded-lg text-md text-center m-3' onClick={() => search()}>Search</button>
+            </div>
       <table className='border-white border-2 border-collapse m-1'>
         <thead className='text-lg border-white border-2'>
           <tr className='text-lg border-white border-2'>

@@ -23,7 +23,7 @@ def addQuotes():
     # return "test"
 
 @app.route('/API/search', methods=['POST'])
-def search():
+def searchBook():
     req = request.get_json(force=True)
     book = req['bookName']
     return jsonify({"bookName": findBook(book)})
